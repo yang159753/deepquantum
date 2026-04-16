@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deepquantum-algorithm-pro
+  namespace: pro
+  labels:
+    k8s-app: deepquantum-algorithm-pro
+spec:
+  replicas: 1
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: deepquantum-algorithm-pro
+  template:
+    metadata:
+      labels:
+        app: deepquantum-algorithm-pro
+
+    spec:
+      imagePullSecrets:
+        - name: registry-harbor
+      automountServiceAccountToken: false
+      containers:
+        - name: deepquantum-algorithm-pro
+          image: 192.168.20.55/api_project/deepquantum-algorithm-pro:latest
+          ports:
+            - containerPort: 80
+              protocol: TCP
+              name: http
+          resources:
+            limits:
+              cpu: 1
+              memory: 3Gi
+              ephemeral-storage: 20Gi
+            requests:
+              cpu: 300m
+              memory: 1Gi
+              ephemeral-storage: 2Gi
+          volumeMounts:
+            - name: deepquantum-algorithm-pro-logs
+              mountPath: /deepquantum-algorithm-pro-logs
+      volumes:
+        - name: deepquantum-algorithm-pro-logs
+          persistentVolumeClaim:
+            claimName: logs
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: deepquantum-algorithm-pro
+  name: deepquantum-algorithm-pro
+  namespace: pro
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP
+      nodePort: 30097
+  selector:
+    app: deepquantum-algorithm-pro
+
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-http-deepquantum-algorithm-pro
+  namespace: pro
+spec:
+  ingressClassName: "nginx"
+  rules:
+    - host: dqapi-test.turingq.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: deepquantum-algorithm-pro
+                port:
+                  number: 80

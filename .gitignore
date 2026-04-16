@@ -77,6 +77,11 @@ instance/
 # Sphinx documentation
 docs/_build/
 _autosummary/
+# MathJax es5 包（docs/setup_mathjax_static.sh 生成，约 25MB，避免提交仓库）
+docs/source/_static/mathjax-es5/
+
+# docs 构建时由 setup_links.sh 创建的 tutorials 符号链接，避免切换分支时报 "would be overwritten"
+docs/source/tutorials
 
 # PyBuilder
 target/
