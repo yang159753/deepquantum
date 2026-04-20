@@ -78,7 +78,7 @@ metadata:
 spec:
   ingressClassName: "nginx"
   rules:
-    - host: dqapi-dev.turingq.com
+    - host: dqapi-test.turingq.com
       http:
         paths:
           - path: /
