@@ -583,5 +583,18 @@
         "summary": "",
         "detailUri": "demos/difficult/quanvolution/quanvolution.html",
         "detailText": "docs/source/demos/difficult/quanvolution/quanvolution.ipynb"
+    },
+    {
+        "authorUid": "author001",
+        "caseUid": "case_3_0020",
+        "title": "基于Breeding的GKP态制备基础",
+        "categories": ["光量子计算","量子编码"],
+        "complexity": "difficult",
+        "showOnHome": 0,
+        "publishedAt": "2026-04-20",
+        "coverImage": "https://turingq-web.oss-cn-shanghai.aliyuncs.com/deepquantum-case/demos/difficult/bosonic_breeding.png",
+        "summary": "",
+        "detailUri": "demos/difficult/bosonic_breeding/bosonic_breeding.html",
+        "detailText": "docs/source/demos/difficult/bosonic_breeding/bosonic_breeding.ipynb"
     }
     ]
